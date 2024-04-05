@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 Flutter plugin to access Keychain Access apis on MacOs.
                        DESC
-  s.homepage         = 'http://github.com/leogps/keychain_access'
+  s.homepage         = 'https://github.com/leogps/keychain_access'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Paul Gundarapu' => 'leogps@gmail.com' }
 
