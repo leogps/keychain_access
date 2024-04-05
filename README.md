@@ -28,7 +28,7 @@ To add secure data into keychain:
         "<secure-password>", # --> Your secure data goes here.
         application: "com.company.exampleApp" # --> This is optional.
     );
-    *Note: // This will throw PlatformException if the secure data with key already exists.
+    // *Note: This will throw PlatformException if the secure data with key already exists.
     // Use addOrUpdateSecureData to replace in case a record already exists with key.
 
 ---
@@ -42,7 +42,7 @@ To update secure data in keychain:
         "<secure-password>", # --> Your secure data goes here.
         application: "com.company.exampleApp" # --> This is optional.
     );
-    *Note: // This will throw PlatformException if the secure data with key does not exist.
+    // *Note: This will throw PlatformException if the secure data with key does not exist.
     // Use addOrUpdateSecureData to add in case a record does not exist with key.
     // However, this does not gurantee any thread-safety.
 
@@ -67,6 +67,6 @@ To delete secure data in keychain:
         "<secure-password>", # --> Your secure data goes here.
         application: "com.company.exampleApp" # --> This is optional.
     );
-    *Note: // This will throw PlatformException if the secure data with key does not exist.
+    // *Note: This will throw PlatformException if the secure data with key does not exist.
 
 
