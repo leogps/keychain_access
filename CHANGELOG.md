@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Formatting to improve pub point score.
+
 ## 1.0.2
 
 - Further updates to accommodate pub dev publishing recommendations.
