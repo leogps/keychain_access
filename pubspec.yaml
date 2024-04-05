@@ -1,6 +1,6 @@
 name: keychain_access
 description: "Flutter plugin to access Keychain Access apis on MacOs."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/leogps/keychain_access
 documentation: https://github.com/leogps/keychain_access
 
