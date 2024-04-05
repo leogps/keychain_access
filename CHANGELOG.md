@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Further updates to accommodate pub dev publishing recommendations.
+
 ## 1.0.1
 
 - Updated plaforms info for pub.dev
