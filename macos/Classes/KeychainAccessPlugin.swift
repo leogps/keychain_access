@@ -101,6 +101,11 @@ public class KeychainAccessPlugin: NSObject, FlutterPlugin {
             result(passwordValue)
             return
         }
+        if status == errSecItemNotFound {
+            print("Password not found.")
+            result(nil)
+            return
+        }
         let errorMessageFromStatus = SecCopyErrorMessageString(status, nil)
         let errorMessage = "Error retrieving password. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
         print(errorMessage)

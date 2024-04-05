@@ -109,16 +109,18 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<void> _triggerFindPassword(_PluginFunctionResults results, String expected,
+  Future<void> _triggerFindPassword(_PluginFunctionResults results, String? expected,
   {
-    String? application
+    String? application,
+    String? key
   }) async {
     String findPasswordSuccessful;
     try {
+      key ??= exampleUsername;
       final passwordValue = await _keychainAccessPlugin.findPassword(
-            exampleUsername,
-            application: application
-        );
+        key,
+        application: application
+      );
       findPasswordSuccessful = passwordValue == expected
           ? "Success($passwordValue)": "Failed";
     } on PlatformException catch(e) {
@@ -172,6 +174,7 @@ class _MyAppState extends State<MyApp> {
     await _triggerFindPassword(_simpleResults, exampleAddOrUpdatePassword);
 
     await _triggerDeletePassword(_simpleResults);
+    await _triggerFindPassword(_simpleResults, null, key: "DOES_NOT_EXIST");
 
     // Results for Application name.
     await _triggerAddPassword(
@@ -208,6 +211,12 @@ class _MyAppState extends State<MyApp> {
       _resultsForApplicationName,
       application: applicationName
     );
+    await _triggerFindPassword(
+      _resultsForApplicationName,
+      null,
+      application: applicationName,
+      key: "DOES_NOT_EXIST"
+    );
   }
 
   @override
@@ -239,6 +248,9 @@ class _MyAppState extends State<MyApp> {
             Center(
               child: Text('Delete Password Status: ${_simpleResults.deletePasswordStatus}\n'),
             ),
+            Center(
+              child: Text('Delete Password Status: ${_simpleResults.passwordNotFoundStatus}\n'),
+            ),
             const Divider(),
 
             Center(
@@ -260,6 +272,9 @@ class _MyAppState extends State<MyApp> {
             Center(
               child: Text('Delete Password Status: ${_resultsForApplicationName.deletePasswordStatus}\n'),
             ),
+            Center(
+              child: Text('Delete Password Status: ${_resultsForApplicationName.passwordNotFoundStatus}\n'),
+            ),
           ],
         ),
       ),
@@ -273,4 +288,5 @@ class _PluginFunctionResults {
   String addOrUpdatePasswordStatus = 'Unknown';
   final findPasswordStatuses = [];
   String deletePasswordStatus = 'Unknown';
+  String passwordNotFoundStatus = 'Unknown';
 }
