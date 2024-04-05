@@ -37,6 +37,8 @@ flutter:
     platforms:
       macos:
         pluginClass: KeychainAccessPlugin
+  platforms:
+    macos:
 
   topics:
     - security
