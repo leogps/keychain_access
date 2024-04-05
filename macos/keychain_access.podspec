@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'keychain_access'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'Flutter plugin to access Keychain Access apis on MacOs.'
   s.description      = <<-DESC
 Flutter plugin to access Keychain Access apis on MacOs.
