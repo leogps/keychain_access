@@ -9,148 +9,148 @@ public class KeychainAccessPlugin: NSObject, FlutterPlugin {
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
     
-    private func handleAddPassword(call: FlutterMethodCall, result: @escaping FlutterResult) {
+    private func handleAddSecureData(call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.arguments == nil {
-            result(FlutterError.init(code: "Invalid args", message: "addPassword requires args", details: nil))
+            result(FlutterError.init(code: "Invalid args", message: "AddSecureData requires args", details: nil))
             return
         }
         let req = KeychainAccessPlugin.parseCall(call)
         if req.key == nil {
-            result(FlutterError.init(code: "Missing param", message: "addPassword requires key", details: nil))
+            result(FlutterError.init(code: "Missing param", message: "AddSecureData requires key", details: nil))
             return
         }
         if req.value == nil {
-            result(FlutterError.init(code: "Missing param", message: "addPassword requires value", details: nil))
+            result(FlutterError.init(code: "Missing param", message: "AddSecureData requires value", details: nil))
             return
         }
-        let status = KeychainAccess.addPassword(service: req.application, account: req.key!, password: req.value!)
+        let status = KeychainAccess.addSecureData(service: req.application, account: req.key!, secureData: req.value!)
         if status == noErr {
-            print("Password added successfully.")
+            print("SecureData added successfully.")
             result("SUCCESS")
             return
         }
         let errorMessageFromStatus = SecCopyErrorMessageString(status, nil)
-        let errorMessage = "Error adding password. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
+        let errorMessage = "Error adding SecureData. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
         print(errorMessage)
         result(FlutterError.init(code: "Failed", message: errorMessage, details: nil))
     }
     
-    private func handleUpdatePassword(call: FlutterMethodCall, result: @escaping FlutterResult) {
+    private func handleUpdateSecureData(call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.arguments == nil {
-            result(FlutterError.init(code: "Invalid args", message: "updatePassword requires args", details: nil))
+            result(FlutterError.init(code: "Invalid args", message: "UpdateSecureData requires args", details: nil))
             return
         }
         let req = KeychainAccessPlugin.parseCall(call)
         if req.key == nil {
-            result(FlutterError.init(code: "Missing param", message: "updatePassword requires key", details: nil))
+            result(FlutterError.init(code: "Missing param", message: "UpdateSecureData requires key", details: nil))
             return
         }
         if req.value == nil {
-            result(FlutterError.init(code: "Missing param", message: "updatePassword requires value", details: nil))
+            result(FlutterError.init(code: "Missing param", message: "UpdateSecureData requires value", details: nil))
             return
         }
-        let status = KeychainAccess.updatePassword(service: req.application, account: req.key!, password: req.value!)
+        let status = KeychainAccess.updateSecureData(service: req.application, account: req.key!, secureData: req.value!)
         if status == noErr {
-            print("Password updated successfully.")
+            print("SecureData updated successfully.")
             result("SUCCESS")
             return
         }
         let errorMessageFromStatus = SecCopyErrorMessageString(status, nil)
-        let errorMessage = "Error updating password. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
+        let errorMessage = "Error updating SecureData. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
         print(errorMessage)
         result(FlutterError.init(code: "Failed", message: errorMessage, details: nil))
     }
     
-    private func handleAddOrUpdatePassword(call: FlutterMethodCall, result: @escaping FlutterResult) {
+    private func handleAddOrUpdateSecureData(call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.arguments == nil {
-            result(FlutterError.init(code: "Invalid args", message: "updatePassword requires args", details: nil))
+            result(FlutterError.init(code: "Invalid args", message: "AddOrUpdateSecureData requires args", details: nil))
             return
         }
         let req = KeychainAccessPlugin.parseCall(call)
         if req.key == nil {
-            result(FlutterError.init(code: "Missing param", message: "updatePassword requires key", details: nil))
+            result(FlutterError.init(code: "Missing param", message: "AddOrUpdateSecureData requires key", details: nil))
             return
         }
         if req.value == nil {
-            result(FlutterError.init(code: "Missing param", message: "updatePassword requires value", details: nil))
+            result(FlutterError.init(code: "Missing param", message: "AddOrUpdateSecureData requires value", details: nil))
             return
         }
-        let passwordResult = KeychainAccess.findPassword(service: req.application, account: req.key!)
-        if passwordResult.0 == noErr {
-            handleUpdatePassword(call: call, result: result)
+        let secureDataResult = KeychainAccess.findSecureData(service: req.application, account: req.key!)
+        if secureDataResult.0 == noErr {
+            handleUpdateSecureData(call: call, result: result)
             return
         }
-        handleAddPassword(call: call, result: result)
+        handleAddSecureData(call: call, result: result)
     }
     
-    private func handleFindPassword(call: FlutterMethodCall, result: @escaping FlutterResult) {
+    private func handleFindSecureData(call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.arguments == nil {
-            result(FlutterError.init(code: "Invalid args", message: "findPassword requires args", details: nil))
+            result(FlutterError.init(code: "Invalid args", message: "FindSecureData requires args", details: nil))
             return
         }
         let req = KeychainAccessPlugin.parseCall(call)
         if req.key == nil {
-            result(FlutterError.init(code: "Missing param", message: "findPassword requires key", details: nil))
+            result(FlutterError.init(code: "Missing param", message: "FindSecureData requires key", details: nil))
             return
         }
-        let passwordResult = KeychainAccess.findPassword(service: req.application, account: req.key!)
-        let status = passwordResult.0
-        let passwordValue = passwordResult.1
+        let secureDataResult = KeychainAccess.findSecureData(service: req.application, account: req.key!)
+        let status = secureDataResult.0
+        let secureDataValue = secureDataResult.1
         if status == noErr {
-            print("Password retrieved successfully.")
-            result(passwordValue)
+            print("SecureData retrieved successfully.")
+            result(secureDataValue)
             return
         }
         if status == errSecItemNotFound {
-            print("Password not found.")
+            print("SecureData not found.")
             result(nil)
             return
         }
         let errorMessageFromStatus = SecCopyErrorMessageString(status, nil)
-        let errorMessage = "Error retrieving password. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
+        let errorMessage = "Error retrieving SecureData. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
         print(errorMessage)
         result(FlutterError.init(code: "Failed", message: errorMessage, details: nil))
     }
     
-    private func handleDeletePassword(call: FlutterMethodCall, result: @escaping FlutterResult) {
+    private func hanldeDeleteSecureData(call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.arguments == nil {
-            result(FlutterError.init(code: "Invalid args", message: "deletePassword requires args", details: nil))
+            result(FlutterError.init(code: "Invalid args", message: "DeleteSecureData requires args", details: nil))
             return
         }
         let req = KeychainAccessPlugin.parseCall(call)
         if req.key == nil {
-            result(FlutterError.init(code: "Missing param", message: "deletePassword requires key", details: nil))
+            result(FlutterError.init(code: "Missing param", message: "DeleteSecureData requires key", details: nil))
             return
         }
-        let status = KeychainAccess.deletePassword(service: req.application, account: req.key!)
+        let status = KeychainAccess.deleteSecureData(service: req.application, account: req.key!)
         
         if status == noErr {
-            print("Password deleted successfully.")
+            print("SecureData deleted successfully.")
             result("SUCCESS")
             return
         }
         let errorMessageFromStatus = SecCopyErrorMessageString(status, nil)
-        let errorMessage = "Error deleting password. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
+        let errorMessage = "Error deleting SecureData. Status Code: \(status); Message: \(errorMessageFromStatus as Optional)"
         print(errorMessage)
         result(FlutterError.init(code: "Failed", message: errorMessage, details: nil))
     }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
-    case "addPassword":
-        handleAddPassword(call: call, result: result)
+    case "addSecureData":
+        handleAddSecureData(call: call, result: result)
         break
-    case "updatePassword":
-        handleUpdatePassword(call: call, result: result)
+    case "updateSecureData":
+        handleUpdateSecureData(call: call, result: result)
         break
-    case "addOrUpdatePassword":
-        handleAddOrUpdatePassword(call: call, result: result)
+    case "addOrUpdateSecureData":
+        handleAddOrUpdateSecureData(call: call, result: result)
         break
-    case "findPassword":
-        handleFindPassword(call: call, result: result)
+    case "findSecureData":
+        handleFindSecureData(call: call, result: result)
         break
-    case "deletePassword":
-        handleDeletePassword(call: call, result: result)
+    case "deleteSecureData":
+        hanldeDeleteSecureData(call: call, result: result)
         break
     default:
         result(FlutterMethodNotImplemented)

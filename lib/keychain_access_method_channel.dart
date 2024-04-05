@@ -12,10 +12,10 @@ class MethodChannelKeychainAccess extends KeychainAccessPlatform {
   final methodChannel = const MethodChannel('keychain_access');
 
   @override
-  Future<bool> addPassword(String key, String value, {
+  Future<bool> addSecureData(String key, String value, {
     String? application
   }) async {
-    final result = await methodChannel.invokeMethod<String>('addPassword', {
+    final result = await methodChannel.invokeMethod<String>('addSecureData', {
       'application': application,
       'key': key,
       'value': value
@@ -24,10 +24,10 @@ class MethodChannelKeychainAccess extends KeychainAccessPlatform {
   }
 
   @override
-  Future<bool> updatePassword(String key, String value, {
+  Future<bool> updateSecureData(String key, String value, {
     String? application
   }) async {
-    final result = await methodChannel.invokeMethod<String>('updatePassword', {
+    final result = await methodChannel.invokeMethod<String>('updateSecureData', {
       'application': application,
       'key': key,
       'value': value
@@ -36,10 +36,10 @@ class MethodChannelKeychainAccess extends KeychainAccessPlatform {
   }
 
   @override
-  Future<bool> addOrUpdatePassword(String key, String value, {
+  Future<bool> addOrUpdateSecureData(String key, String value, {
     String? application
   }) async {
-    final result = await methodChannel.invokeMethod<String>('addOrUpdatePassword', {
+    final result = await methodChannel.invokeMethod<String>('addOrUpdateSecureData', {
       'application': application,
       'key': key,
       'value': value
@@ -48,20 +48,20 @@ class MethodChannelKeychainAccess extends KeychainAccessPlatform {
   }
 
   @override
-  Future<String?> findPassword(String key, {
+  Future<String?> findSecureData(String key, {
     String? application
   }) async {
-    return await methodChannel.invokeMethod<String>('findPassword', {
+    return await methodChannel.invokeMethod<String>('findSecureData', {
       'application': application,
       'key': key
     });
   }
 
   @override
-  Future<bool> deletePassword(String key, {
+  Future<bool> deleteSecureData(String key, {
     String? application
   }) async {
-    final result = await methodChannel.invokeMethod<String>('deletePassword', {
+    final result = await methodChannel.invokeMethod<String>('deleteSecureData', {
       'application': application,
       'key': key
     });

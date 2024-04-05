@@ -1,6 +1,6 @@
 PODS:
   - FlutterMacOS (1.0.0)
-  - keychain_access (0.0.1):
+  - keychain_access (1.0.0):
     - FlutterMacOS
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  keychain_access: de606bcfcd5dc4cc2b72b6bb6bd21a27810a6afe
+  keychain_access: 76a0944ecd9de1564d1c9a858a0dfefccbd0fc34
 
 PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367
 

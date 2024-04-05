@@ -23,33 +23,33 @@ abstract class KeychainAccessPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<bool> addPassword(String key, String value, {
+  Future<bool> addSecureData(String key, String value, {
     String? application
   }) {
-    throw UnimplementedError('addPassword() has not been implemented.');
+    throw UnimplementedError('addSecureData() has not been implemented.');
   }
 
-  Future<bool> updatePassword(String key, String value, {
+  Future<bool> updateSecureData(String key, String value, {
     String? application
   }) {
-    throw UnimplementedError('updatePassword() has not been implemented.');
+    throw UnimplementedError('updateSecureData() has not been implemented.');
   }
 
-  Future<bool> addOrUpdatePassword(String key, String value, {
+  Future<bool> addOrUpdateSecureData(String key, String value, {
     String? application
   }) {
-    throw UnimplementedError('addOrUpdatePassword() has not been implemented.');
+    throw UnimplementedError('addOrUpdateSecureData() has not been implemented.');
   }
 
-  Future<String?> findPassword(String key, {
+  Future<String?> findSecureData(String key, {
     String? application
   }) {
-    throw UnimplementedError('findPassword() has not been implemented.');
+    throw UnimplementedError('findSecureData() has not been implemented.');
   }
 
-  Future<bool> deletePassword(String key, {
+  Future<bool> deleteSecureData(String key, {
     String? application
   }) {
-    throw UnimplementedError('deletePassword() has not been implemented.');
+    throw UnimplementedError('deleteSecureData() has not been implemented.');
   }
 }

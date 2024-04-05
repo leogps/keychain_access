@@ -37,8 +37,7 @@ class _MyAppState extends State<MyApp> {
   }) async {
     String passwordAddSuccessful;
     try {
-      passwordAddSuccessful =
-      await _keychainAccessPlugin.addPassword(
+      passwordAddSuccessful = await _keychainAccessPlugin.addSecureData(
         exampleUsername,
         examplePassword,
           application: application
@@ -63,7 +62,7 @@ class _MyAppState extends State<MyApp> {
   }) async {
     String passwordUpdateSuccessful;
     try {
-      passwordUpdateSuccessful = await _keychainAccessPlugin.updatePassword(
+      passwordUpdateSuccessful = await _keychainAccessPlugin.updateSecureData(
         exampleUsername,
         exampleUpdatedPassword,
         application: application
@@ -89,7 +88,7 @@ class _MyAppState extends State<MyApp> {
     String addOrUpdatePasswordSuccessful;
     try {
       addOrUpdatePasswordSuccessful =
-      await _keychainAccessPlugin.updatePassword(
+      await _keychainAccessPlugin.updateSecureData(
         exampleUsername,
         exampleAddOrUpdatePassword,
         application: application
@@ -117,7 +116,7 @@ class _MyAppState extends State<MyApp> {
     String findPasswordSuccessful;
     try {
       key ??= exampleUsername;
-      final passwordValue = await _keychainAccessPlugin.findPassword(
+      final passwordValue = await _keychainAccessPlugin.findSecureData(
         key,
         application: application
       );
@@ -142,7 +141,7 @@ class _MyAppState extends State<MyApp> {
   }) async {
     String deletePasswordSuccessful;
     try {
-      deletePasswordSuccessful = await _keychainAccessPlugin.deletePassword(
+      deletePasswordSuccessful = await _keychainAccessPlugin.deleteSecureData(
           exampleUsername,
           application: application
       )
@@ -226,55 +225,46 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Keychain Access Plugin Example'),
         ),
-        body: Column(
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Divider(),
-            const Center(
-              child: Text('Simple password tests:'),
+            SizedBox(
+              width: 400,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text('**Simple password tests:'),
+                    Text('Add Password Status: ${_simpleResults.addPasswordStatus}\n'),
+                    Text('Update Password Status: ${_simpleResults.updatePasswordStatus}\n'),
+                    Text('AddOrUpdate Password Status: ${_simpleResults.addOrUpdatePasswordStatus}\n'),
+                    Text('Find Password Statuses: ${_simpleResults.findPasswordStatuses}\n'),
+                    Text('Delete Password Status: ${_simpleResults.deletePasswordStatus}\n'),
+                  ],
+                ),
+              ),
             ),
-            const Divider(),
-            Center(
-              child: Text('Add Password Status: ${_simpleResults.addPasswordStatus}\n'),
-            ),
-            Center(
-              child: Text('Update Password Status: ${_simpleResults.updatePasswordStatus}\n'),
-            ),
-            Center(
-              child: Text('Update Password Status: ${_simpleResults.addOrUpdatePasswordStatus}\n'),
-            ),
-            Center(
-              child: Text('Find Password Statuses: ${_simpleResults.findPasswordStatuses}\n'),
-            ),
-            Center(
-              child: Text('Delete Password Status: ${_simpleResults.deletePasswordStatus}\n'),
-            ),
-            Center(
-              child: Text('Delete Password Status: ${_simpleResults.passwordNotFoundStatus}\n'),
-            ),
-            const Divider(),
-
-            Center(
-              child: Text('Application password tests for application: $applicationName'),
-            ),
-            const Divider(),
-            Center(
-              child: Text('Add Password Status: ${_resultsForApplicationName.addPasswordStatus}\n'),
-            ),
-            Center(
-              child: Text('Update Password Status: ${_resultsForApplicationName.updatePasswordStatus}\n'),
-            ),
-            Center(
-              child: Text('Update Password Status: ${_resultsForApplicationName.addOrUpdatePasswordStatus}\n'),
-            ),
-            Center(
-              child: Text('Find Password Statuses: ${_resultsForApplicationName.findPasswordStatuses}\n'),
-            ),
-            Center(
-              child: Text('Delete Password Status: ${_resultsForApplicationName.deletePasswordStatus}\n'),
-            ),
-            Center(
-              child: Text('Delete Password Status: ${_resultsForApplicationName.passwordNotFoundStatus}\n'),
-            ),
+            SizedBox(
+              width: 400,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('**Application password tests for application: $applicationName'),
+                    Text('Add Password Status: ${_resultsForApplicationName.addPasswordStatus}\n'),
+                    Text('Update Password Status: ${_resultsForApplicationName.updatePasswordStatus}\n'),
+                    Text('AddOrUpdate Password Status: ${_resultsForApplicationName.addOrUpdatePasswordStatus}\n'),
+                    Text('Find Password Statuses: ${_resultsForApplicationName.findPasswordStatuses}\n'),
+                    Text('Delete Password Status: ${_resultsForApplicationName.deletePasswordStatus}\n'),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -288,5 +278,4 @@ class _PluginFunctionResults {
   String addOrUpdatePasswordStatus = 'Unknown';
   final findPasswordStatuses = [];
   String deletePasswordStatus = 'Unknown';
-  String passwordNotFoundStatus = 'Unknown';
 }

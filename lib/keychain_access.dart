@@ -3,59 +3,65 @@ import 'keychain_access_platform_interface.dart';
 
 class KeychainAccess {
 
-  /// Add password with key and value(password).
+  /// Add secure data with key and value(password).
+  /// Note*: Throws exception if a record with key exists.
   /// Optionally, specify application.
-  Future<bool> addPassword(String key, String value, {
+  Future<bool> addSecureData(String key, String value, {
     String? application
   }) {
-    return KeychainAccessPlatform.instance.addPassword(
+    return KeychainAccessPlatform.instance.addSecureData(
         key,
         value,
         application: application
     );
   }
 
-  /// Update password with key and value(password).
+  /// Update secure data with key and value(password).
+  /// Note*: Throws exception if a record with key does not exist.
   /// Optionally, specify application.
-  Future<bool> updatePassword(String key, String value, {
+  Future<bool> updateSecureData(String key, String value, {
     String? application
   }) {
-    return KeychainAccessPlatform.instance.updatePassword(
+    return KeychainAccessPlatform.instance.updateSecureData(
         key,
         value,
         application: application
     );
   }
 
-  /// addOrUpdate password with key and value(password).
+  /// addOrUpdate secure data with key and value(password).
+  /// Essentially, does not throw any exception if data does not exist with the
+  /// key and adds the secure data to the keychain, if found, it replaces the
+  /// existing record.
   /// Optionally, specify application.
-  Future<bool> addOrUpdatePassword(String key, String value, {
+  Future<bool> addOrUpdateSecureData(String key, String value, {
     String? application
   }) {
-    return KeychainAccessPlatform.instance.addOrUpdatePassword(
+    return KeychainAccessPlatform.instance.addOrUpdateSecureData(
         key,
         value,
         application: application
     );
   }
 
-  /// Find password for key.
+  /// Find secure data with key in the keychain.
+  /// Returns null if not found.
   /// Optionally, specify application.
-  Future<String?> findPassword(String key, {
+  Future<String?> findSecureData(String key, {
     String? application
   }) {
-    return KeychainAccessPlatform.instance.findPassword(
+    return KeychainAccessPlatform.instance.findSecureData(
         key,
         application: application
     );
   }
 
-  /// Delete password for key.
+  /// Delete secure data for key.
   /// Optionally, specify application.
-  Future<bool> deletePassword(String key, {
+  Future<bool> deleteSecureData(String key, {
     String? application
   }) {
-    return KeychainAccessPlatform.instance.deletePassword(
+    return KeychainAccessPlatform.instance.deleteSecureData(
         key,
         application: application
     );

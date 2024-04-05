@@ -9,27 +9,27 @@ class MockKeychainAccessPlatform
     implements KeychainAccessPlatform {
 
   @override
-  Future<bool> addPassword(String key, String value, {
+  Future<bool> addSecureData(String key, String value, {
     String? application
   }) => Future.value(true);
 
   @override
-  Future<bool> updatePassword(String key, String value, {
+  Future<bool> updateSecureData(String key, String value, {
     String? application
   }) => Future.value(true);
 
   @override
-  Future<bool> addOrUpdatePassword(String key, String value, {
+  Future<bool> addOrUpdateSecureData(String key, String value, {
     String? application
   }) => Future.value(true);
 
   @override
-  Future<String?> findPassword(String key, {
+  Future<String?> findSecureData(String key, {
     String? application
   }) => Future.value("My_Password");
 
   @override
-  Future<bool> deletePassword(String key, {
+  Future<bool> deleteSecureData(String key, {
     String? application
   }) => Future.value(true);
 }
@@ -41,43 +41,43 @@ void main() {
     expect(initialPlatform, isInstanceOf<MethodChannelKeychainAccess>());
   });
 
-  test('addPassword', () async {
+  test('addSecureData', () async {
     KeychainAccess keychainAccessPlugin = KeychainAccess();
     MockKeychainAccessPlatform fakePlatform = MockKeychainAccessPlatform();
     KeychainAccessPlatform.instance = fakePlatform;
 
-    expect(await keychainAccessPlugin.addPassword('my_app', 'my_password'), true);
+    expect(await keychainAccessPlugin.addSecureData('my_app', 'my_password'), true);
   });
 
-  test('updatePassword', () async {
+  test('updateSecureData', () async {
     KeychainAccess keychainAccessPlugin = KeychainAccess();
     MockKeychainAccessPlatform fakePlatform = MockKeychainAccessPlatform();
     KeychainAccessPlatform.instance = fakePlatform;
 
-    expect(await keychainAccessPlugin.updatePassword('my_app', 'my_password'), true);
+    expect(await keychainAccessPlugin.updateSecureData('my_app', 'my_password'), true);
   });
 
-  test('addOrUpdatePassword', () async {
+  test('addOrUpdateSecureData', () async {
     KeychainAccess keychainAccessPlugin = KeychainAccess();
     MockKeychainAccessPlatform fakePlatform = MockKeychainAccessPlatform();
     KeychainAccessPlatform.instance = fakePlatform;
 
-    expect(await keychainAccessPlugin.addOrUpdatePassword('my_app', 'my_password'), true);
+    expect(await keychainAccessPlugin.addOrUpdateSecureData('my_app', 'my_password'), true);
   });
 
-  test('findPassword', () async {
+  test('findSecureData', () async {
     KeychainAccess keychainAccessPlugin = KeychainAccess();
     MockKeychainAccessPlatform fakePlatform = MockKeychainAccessPlatform();
     KeychainAccessPlatform.instance = fakePlatform;
 
-    expect(await keychainAccessPlugin.findPassword('my_app'), 'My_Password');
+    expect(await keychainAccessPlugin.findSecureData('my_app'), 'My_Password');
   });
 
-  test('deletePassword', () async {
+  test('deleteSecureData', () async {
     KeychainAccess keychainAccessPlugin = KeychainAccess();
     MockKeychainAccessPlatform fakePlatform = MockKeychainAccessPlatform();
     KeychainAccessPlatform.instance = fakePlatform;
 
-    expect(await keychainAccessPlugin.deletePassword('my_app'), true);
+    expect(await keychainAccessPlugin.deleteSecureData('my_app'), true);
   });
 }
