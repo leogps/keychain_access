@@ -1,6 +1,7 @@
 name: keychain_access
-description: "Flutter plugin to access Keychain Access apis on MacOs. Provides a secure way to store and retrieve secure content from the keychain"
-version: 1.0.3
+description: "Flutter plugin to access Keychain Access apis on MacOS and iOS. 
+  Provides a secure way to store and retrieve secure content from the keychain"
+version: 1.0.4
 homepage: https://github.com/leogps/keychain_access
 documentation: https://github.com/leogps/keychain_access
 
@@ -18,28 +19,17 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^3.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-  # This section identifies this Flutter project as a plugin project.
-  # The 'pluginClass' specifies the class (in Java, Kotlin, Swift, Objective-C, etc.)
-  # which should be registered in the plugin registry. This is required for
-  # using method channels.
-  # The Android 'package' specifies package in which the registered class is.
-  # This is required for using method channels on Android.
-  # The 'ffiPlugin' specifies that native code should be built and bundled.
-  # This is required for using `dart:ffi`.
-  # All these are used by the tooling to maintain consistency when
-  # adding or updating assets for this project.
   plugin:
     platforms:
       macos:
         pluginClass: KeychainAccessPlugin
+      ios:
+        pluginClass: KeychainAccessPlugin
 
 platforms:
   macos:
+  ios:
 
 topics:
   - security

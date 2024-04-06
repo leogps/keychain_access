@@ -1,13 +1,30 @@
+//
+//  KeychainAccessPlugin.swift
+//  keychain_access
+//
+//  Created by Paul Gundarapu on 4/6/24.
+//
+
+#if os(OSX)
 import Cocoa
 import FlutterMacOS
+#elseif os(iOS)
+import UIKit
+import Flutter
+#endif
 
 public class KeychainAccessPlugin: NSObject, FlutterPlugin {
     
-  public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "keychain_access", binaryMessenger: registrar.messenger)
-    let instance = KeychainAccessPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let channel: FlutterMethodChannel
+#if os(OSX)
+        channel = FlutterMethodChannel(name: "keychain_access", binaryMessenger: registrar.messenger)
+#elseif os(iOS)
+        channel = FlutterMethodChannel(name: "keychain_access", binaryMessenger: registrar.messenger())
+#endif
+        let instance = KeychainAccessPlugin()
+        registrar.addMethodCallDelegate(instance, channel: channel)
+    }
     
     private func handleAddSecureData(call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.arguments == nil {
@@ -134,28 +151,28 @@ public class KeychainAccessPlugin: NSObject, FlutterPlugin {
         print(errorMessage)
         result(FlutterError.init(code: "Failed", message: errorMessage, details: nil))
     }
-
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    switch call.method {
-    case "addSecureData":
-        handleAddSecureData(call: call, result: result)
-        break
-    case "updateSecureData":
-        handleUpdateSecureData(call: call, result: result)
-        break
-    case "addOrUpdateSecureData":
-        handleAddOrUpdateSecureData(call: call, result: result)
-        break
-    case "findSecureData":
-        handleFindSecureData(call: call, result: result)
-        break
-    case "deleteSecureData":
-        hanldeDeleteSecureData(call: call, result: result)
-        break
-    default:
-        result(FlutterMethodNotImplemented)
+    
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        switch call.method {
+        case "addSecureData":
+            handleAddSecureData(call: call, result: result)
+            break
+        case "updateSecureData":
+            handleUpdateSecureData(call: call, result: result)
+            break
+        case "addOrUpdateSecureData":
+            handleAddOrUpdateSecureData(call: call, result: result)
+            break
+        case "findSecureData":
+            handleFindSecureData(call: call, result: result)
+            break
+        case "deleteSecureData":
+            hanldeDeleteSecureData(call: call, result: result)
+            break
+        default:
+            result(FlutterMethodNotImplemented)
+        }
     }
-  }
     
     private static func parseCall(_ call: FlutterMethodCall) -> KeychainAccessRequest {
         let arguments = call.arguments as! [String : Any?]
