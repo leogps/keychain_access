@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Added iOS support.
+
 ## 1.0.3
 
 - Formatting to improve pub point score.
