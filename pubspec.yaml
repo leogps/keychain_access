@@ -7,7 +7,7 @@ documentation: https://github.com/leogps/keychain_access
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
-  flutter: '>=3.3.0'
+  flutter: '>=3.7.0'
 
 dependencies:
   flutter:
@@ -24,8 +24,10 @@ flutter:
     platforms:
       macos:
         pluginClass: KeychainAccessPlugin
+        sharedDarwinSource: true
       ios:
         pluginClass: KeychainAccessPlugin
+        sharedDarwinSource: true
 
 platforms:
   macos:
