@@ -1,6 +1,6 @@
 # keychain_access
 
-Flutter plugin to access Keychain Access apis on MacOs.
+Flutter plugin to access Keychain Access apis on MacOS & iOS.
 
 - Following operations are available
 
@@ -10,13 +10,13 @@ Flutter plugin to access Keychain Access apis on MacOs.
 
 ## Introduction
 
-#### Why only MacOs:
-In my opinion, there are numerous stable libraries/plugins available for Android however a reliable plugin for MacOs does not seem to exist. 
+#### Why:
+In my opinion, there are numerous stable libraries/plugins available for Android however a reliable plugin for MacOS & iOS does not seem to exist. 
 
-This plugin currently only supports MacOS and maybe extended to iOS in the future and other platforms if such a need arises.
+This plugin currently only supports MacOS & iOS and maybe extended to other platforms if such a need arises.
 
-On MacOs, leverages [Keychain Services API](https://developer.apple.com/documentation/security/keychain_services#//apple_ref/doc/uid/TP30000897-CH203-TP1) to 
-add secure data, query the secure data, delete the secure data.
+It leverages [Keychain Services API](https://developer.apple.com/documentation/security/keychain_services#//apple_ref/doc/uid/TP30000897-CH203-TP1) to 
+add secure data, query the secure data and delete the secure data.
 
 ## Usage
 To add secure data into keychain:

@@ -32,18 +32,16 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  Future<void> _triggerAddPassword(_PluginFunctionResults results, {
-    String? application
-  }) async {
+  Future<void> _triggerAddPassword(_PluginFunctionResults results,
+      {String? application}) async {
     String passwordAddSuccessful;
     try {
       passwordAddSuccessful = await _keychainAccessPlugin.addSecureData(
-        exampleUsername,
-        examplePassword,
-          application: application
-      ) ?
-      "Success" : "FAILED";
-    } on PlatformException catch(e) {
+              exampleUsername, examplePassword,
+              application: application)
+          ? "Success"
+          : "FAILED";
+    } on PlatformException catch (e) {
       passwordAddSuccessful = 'Failed to addPassword $e';
     }
 
@@ -53,22 +51,21 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      results.addPasswordStatus = passwordAddSuccessful;
+      results.addPasswordStatus.message = passwordAddSuccessful;
+      results.addPasswordStatus.status = passwordAddSuccessful == "Success";
     });
   }
 
-  Future<void> _triggerUpdatePassword(_PluginFunctionResults results, {
-    String? application
-  }) async {
+  Future<void> _triggerUpdatePassword(_PluginFunctionResults results,
+      {String? application}) async {
     String passwordUpdateSuccessful;
     try {
       passwordUpdateSuccessful = await _keychainAccessPlugin.updateSecureData(
-        exampleUsername,
-        exampleUpdatedPassword,
-        application: application
-      ) ?
-      "Success" : "FAILED";
-    } on PlatformException catch(e) {
+              exampleUsername, exampleUpdatedPassword,
+              application: application)
+          ? "Success"
+          : "FAILED";
+    } on PlatformException catch (e) {
       passwordUpdateSuccessful = 'Failed to updatePassword $e';
     }
 
@@ -78,23 +75,22 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      results.updatePasswordStatus = passwordUpdateSuccessful;
+      results.updatePasswordStatus.message = passwordUpdateSuccessful;
+      results.updatePasswordStatus.status =
+          passwordUpdateSuccessful == 'Success';
     });
   }
 
-  Future<void> _triggerAddOrUpdatePassword(_PluginFunctionResults results, {
-    String? application
-  }) async {
+  Future<void> _triggerAddOrUpdatePassword(_PluginFunctionResults results,
+      {String? application}) async {
     String addOrUpdatePasswordSuccessful;
     try {
-      addOrUpdatePasswordSuccessful =
-      await _keychainAccessPlugin.updateSecureData(
-        exampleUsername,
-        exampleAddOrUpdatePassword,
-        application: application
-      ) ?
-      "Success" : "FAILED";
-    } on PlatformException catch(e) {
+      addOrUpdatePasswordSuccessful = await _keychainAccessPlugin
+              .updateSecureData(exampleUsername, exampleAddOrUpdatePassword,
+                  application: application)
+          ? "Success"
+          : "FAILED";
+    } on PlatformException catch (e) {
       addOrUpdatePasswordSuccessful = 'Failed to addOrUpdatePassword $e';
     }
 
@@ -104,25 +100,25 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      results.addOrUpdatePasswordStatus = addOrUpdatePasswordSuccessful;
+      results.addOrUpdatePasswordStatus.message = addOrUpdatePasswordSuccessful;
+      results.addOrUpdatePasswordStatus.status =
+          addOrUpdatePasswordSuccessful == 'Success';
     });
   }
 
-  Future<void> _triggerFindPassword(_PluginFunctionResults results, String? expected,
-  {
-    String? application,
-    String? key
-  }) async {
+  Future<void> _triggerFindPassword(
+      _PluginFunctionResults results, String? expected,
+      {String? application, String? key}) async {
     String findPasswordSuccessful;
+    bool isSuccess = false;
     try {
       key ??= exampleUsername;
-      final passwordValue = await _keychainAccessPlugin.findSecureData(
-        key,
-        application: application
-      );
-      findPasswordSuccessful = passwordValue == expected
-          ? "Success($passwordValue)": "Failed";
-    } on PlatformException catch(e) {
+      final passwordValue = await _keychainAccessPlugin.findSecureData(key,
+          application: application);
+      isSuccess = passwordValue == expected;
+      findPasswordSuccessful =
+          isSuccess ? "$passwordValue" : "Failed";
+    } on PlatformException catch (e) {
       findPasswordSuccessful = 'Failed to findPassword $e';
     }
 
@@ -132,21 +128,22 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      results.findPasswordStatuses.add(findPasswordSuccessful);
+      final result = _PluginFunctionResult();
+      result.message = findPasswordSuccessful;
+      result.status = isSuccess;
+      results.findPasswordStatuses.add(result);
     });
   }
 
-  Future<void> _triggerDeletePassword(_PluginFunctionResults results, {
-    String? application
-  }) async {
+  Future<void> _triggerDeletePassword(_PluginFunctionResults results,
+      {String? application}) async {
     String deletePasswordSuccessful;
     try {
-      deletePasswordSuccessful = await _keychainAccessPlugin.deleteSecureData(
-          exampleUsername,
-          application: application
-      )
-          ? "Success": "Failed";
-    } on PlatformException catch(e) {
+      deletePasswordSuccessful = await _keychainAccessPlugin
+              .deleteSecureData(exampleUsername, application: application)
+          ? "Success"
+          : "Failed";
+    } on PlatformException catch (e) {
       deletePasswordSuccessful = 'Failed to deletePassword $e';
     }
 
@@ -156,7 +153,9 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      results.deletePasswordStatus = deletePasswordSuccessful;
+      results.deletePasswordStatus.message = deletePasswordSuccessful;
+      results.deletePasswordStatus.status =
+          deletePasswordSuccessful == 'Success';
     });
   }
 
@@ -176,106 +175,176 @@ class _MyAppState extends State<MyApp> {
     await _triggerFindPassword(_simpleResults, null, key: "DOES_NOT_EXIST");
 
     // Results for Application name.
-    await _triggerAddPassword(
-      _resultsForApplicationName,
-      application: applicationName
-    );
-    await _triggerFindPassword(
-      _resultsForApplicationName,
-      examplePassword,
-      application: applicationName
-    );
+    await _triggerAddPassword(_resultsForApplicationName,
+        application: applicationName);
+    await _triggerFindPassword(_resultsForApplicationName, examplePassword,
+        application: applicationName);
 
-    await _triggerUpdatePassword(
-      _resultsForApplicationName,
-      application: applicationName
-    );
+    await _triggerUpdatePassword(_resultsForApplicationName,
+        application: applicationName);
     await _triggerFindPassword(
-      _resultsForApplicationName,
-      exampleUpdatedPassword,
-      application: applicationName
-    );
+        _resultsForApplicationName, exampleUpdatedPassword,
+        application: applicationName);
 
-    await _triggerAddOrUpdatePassword(
-      _resultsForApplicationName,
-      application: applicationName
-    );
+    await _triggerAddOrUpdatePassword(_resultsForApplicationName,
+        application: applicationName);
     await _triggerFindPassword(
-      _resultsForApplicationName,
-      exampleAddOrUpdatePassword,
-      application: applicationName
-    );
+        _resultsForApplicationName, exampleAddOrUpdatePassword,
+        application: applicationName);
 
-    await _triggerDeletePassword(
-      _resultsForApplicationName,
-      application: applicationName
-    );
-    await _triggerFindPassword(
-      _resultsForApplicationName,
-      null,
-      application: applicationName,
-      key: "DOES_NOT_EXIST"
-    );
+    await _triggerDeletePassword(_resultsForApplicationName,
+        application: applicationName);
+    await _triggerFindPassword(_resultsForApplicationName, null,
+        application: applicationName, key: "DOES_NOT_EXIST");
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Keychain Access Plugin Example'),
-        ),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 400,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Text('**Simple password tests:'),
-                    Text('Add Password Status: ${_simpleResults.addPasswordStatus}\n'),
-                    Text('Update Password Status: ${_simpleResults.updatePasswordStatus}\n'),
-                    Text('AddOrUpdate Password Status: ${_simpleResults.addOrUpdatePasswordStatus}\n'),
-                    Text('Find Password Statuses: ${_simpleResults.findPasswordStatuses}\n'),
-                    Text('Delete Password Status: ${_simpleResults.deletePasswordStatus}\n'),
-                  ],
-                ),
+        home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Keychain Access Plugin Example'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Table(
+            border: TableBorder.all(),
+            // columnWidths: {
+            //   0: FixedColumnWidth(400),
+            //   1: FixedColumnWidth(400),
+            // },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: [
+              TableRow(
+                children: [
+                  TableCell(child: columnField('Function Name', heading: true)),
+                  TableCell(
+                    child: columnField('No Application field', heading: true),
+                  ),
+                  TableCell(
+                    child: columnField('W/ Application', heading: true),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              width: 400,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('**Application password tests for application: $applicationName'),
-                    Text('Add Password Status: ${_resultsForApplicationName.addPasswordStatus}\n'),
-                    Text('Update Password Status: ${_resultsForApplicationName.updatePasswordStatus}\n'),
-                    Text('AddOrUpdate Password Status: ${_resultsForApplicationName.addOrUpdatePasswordStatus}\n'),
-                    Text('Find Password Statuses: ${_resultsForApplicationName.findPasswordStatuses}\n'),
-                    Text('Delete Password Status: ${_resultsForApplicationName.deletePasswordStatus}\n'),
-                  ],
-                ),
+              TableRow(
+                children: [
+                  TableCell(
+                    child: columnField('addSecureData'),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        [_simpleResults.addPasswordStatus])),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        [_resultsForApplicationName.addPasswordStatus])),
+                  ),
+                ],
               ),
-            )
-          ],
-        ),
+              TableRow(
+                children: [
+                  TableCell(
+                    child: columnField('updateSecureData'),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        [_simpleResults.updatePasswordStatus])),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        [_resultsForApplicationName.updatePasswordStatus])),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  TableCell(
+                    child: columnField('addOrUpdateSecureData'),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        [_simpleResults.addOrUpdatePasswordStatus])),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage([
+                      _resultsForApplicationName.addOrUpdatePasswordStatus
+                    ])),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  TableCell(
+                    child: columnField('findSecureData'),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        _simpleResults.findPasswordStatuses)),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        _resultsForApplicationName.findPasswordStatuses)),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  TableCell(
+                    child: columnField('deleteSecureData'),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        [_simpleResults.deletePasswordStatus])),
+                  ),
+                  TableCell(
+                    child: columnField(_buildStatusMessage(
+                        [_resultsForApplicationName.deletePasswordStatus])),
+                  ),
+                ],
+              ),
+            ]),
+      ),
+    ));
+  }
+
+  Widget columnField(String text, {bool heading = false}) {
+    TextStyle style = const TextStyle();
+    if (heading) {
+      style = const TextStyle(fontWeight: FontWeight.bold);
+    }
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: Text(
+        text,
+        style: style,
       ),
     );
+  }
+
+  String _buildStatusMessage(List<_PluginFunctionResult> statuses) {
+    if (statuses.isEmpty) {
+      return '';
+    }
+    bool allSuccess = statuses
+        .map((e) => e.status)
+        .reduce((value, element) => value && element);
+    final message = statuses.map((e) => e.message).join('\n');
+    if (allSuccess) {
+      return '✅$message';
+    }
+    return '❌$message';
   }
 }
 
 class _PluginFunctionResults {
-  String addPasswordStatus = 'Unknown';
-  String updatePasswordStatus = 'Unknown';
-  String addOrUpdatePasswordStatus = 'Unknown';
-  final findPasswordStatuses = [];
-  String deletePasswordStatus = 'Unknown';
+  _PluginFunctionResult addPasswordStatus = _PluginFunctionResult();
+  _PluginFunctionResult updatePasswordStatus = _PluginFunctionResult();
+  _PluginFunctionResult addOrUpdatePasswordStatus = _PluginFunctionResult();
+  final List<_PluginFunctionResult> findPasswordStatuses = [];
+  _PluginFunctionResult deletePasswordStatus = _PluginFunctionResult();
+}
+
+class _PluginFunctionResult {
+  bool status = false;
+  String message = 'Unknown';
 }
