@@ -6,13 +6,13 @@ PODS:
 
 DEPENDENCIES:
   - FlutterMacOS (from `Flutter/ephemeral`)
-  - keychain_access (from `Flutter/ephemeral/.symlinks/plugins/keychain_access/macos`)
+  - keychain_access (from `Flutter/ephemeral/.symlinks/plugins/keychain_access/darwin`)
 
 EXTERNAL SOURCES:
   FlutterMacOS:
     :path: Flutter/ephemeral
   keychain_access:
-    :path: Flutter/ephemeral/.symlinks/plugins/keychain_access/macos
+    :path: Flutter/ephemeral/.symlinks/plugins/keychain_access/darwin
 
 SPEC CHECKSUMS:
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24

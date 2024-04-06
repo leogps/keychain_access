@@ -9,7 +9,7 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - keychain_access (from `.symlinks/plugins/keychain_access/ios`)
+  - keychain_access (from `.symlinks/plugins/keychain_access/darwin`)
 
 EXTERNAL SOURCES:
   Flutter:
@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
   keychain_access:
-    :path: ".symlinks/plugins/keychain_access/ios"
+    :path: ".symlinks/plugins/keychain_access/darwin"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
