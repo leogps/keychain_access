@@ -4,10 +4,5 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>$(AppIdentifierPrefix)org.gps.keychainAccess.example</string>
-		<string>$(AppIdentifierPrefix)*</string>
-	</array>
 </dict>
 </plist>
